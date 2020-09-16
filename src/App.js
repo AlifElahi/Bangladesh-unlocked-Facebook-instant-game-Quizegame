@@ -92,7 +92,7 @@ class App extends Component {
         add.push(r)
       }
     }
-    for (let i = 0; i < banglaQ.length; i++) {
+    for (let i = 0; i < 10; i++) {
       let q = banglaQ[i][Math.floor((Math.random() * banglaQ[i].length) + 0)]
       let eq = englishQ[i][Math.floor((Math.random() * englishQ[i].length) + 0)]
       q.answers = await this.shuffleArray(q.answers);
@@ -160,7 +160,7 @@ class App extends Component {
         add.push(r)
       }
     }
-    for (let i = 0; i < qu.length; i++) {
+    for (let i = 0; i < 10; i++) {
     
       let q = qu[i][Math.floor((Math.random() * banglaQ[i].length) + 0)]
 
