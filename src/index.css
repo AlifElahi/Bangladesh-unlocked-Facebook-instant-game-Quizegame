@@ -1,0 +1,47 @@
+
+/* @font-face {
+  font-family: 'SutonnyMJ';
+  src: local('SutonnyMJ'), url(./font/SutonnyMJ\ Regular.ttf) format('truetype');
+} */
+
+  
+@font-face {
+	font-family: 'univers-condensed-medium';
+	src: url(./font/univers-condensed-medium.eot);
+	src: local('univers-condensed-medium'), url(./font/univers-condensed-medium.woff) format('woff'), url(./font/univers-condensed-medium.ttf) format('truetype'), url(./font/univers-condensed-medium.svg) format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'univers-condensed-bold';
+	src: url(./font/univers-condensed-bold.eot);
+	src: local('univers-condensed-bold'), url(./font/univers-condensed-bold.woff) format('woff'), url(./font/univers-condensed-bold.ttf) format('truetype'), url(./font/univers-condensed-bold.svg) format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@import url('https://fonts.maateen.me/kalpurush/font.css');
+@import url('https://fonts.maateen.me/bangla/font.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Kalpurush', 'Segoe UI', 'Roboto', 'Oxygen','Bangla',
+    'Ubuntu', 'Cantarell','SutonnyMJ Regular', 'Fira Sans', 'univers-condensed-medium', 'univers-condensed-bold','Helvetica Neue','Roboto Condensed','SutonnyMJ Bold'
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: flex-end;
+  ;
+}
