@@ -308,11 +308,11 @@ const englishQ = [
         } ,
         {
           question: 'Who is the national poet of Bangladesh?',
-          answer: '',
+          answer: 'Kazi Nazrul Islam',
           answers: [
             'Rabindranath Tagore ',
             'Michael Modhusudhon Dutta ',
-            'Kazi Nazrul Islam (Ans)  ',
+            'Kazi Nazrul Islam',
             'Shamsur Rahman'
           ]
         } ,
@@ -682,7 +682,7 @@ const englishQ = [
             answers: ["Speaker’s Vote", "Vote casted by Whip", "President’s Vote ", "MP’s Vote"]
         },
         {
-            question: "13.	Which of the following district holds only one seat in parliament? ",
+            question: "Which of the following district holds only one seat in parliament? ",
             answer: "Rangamati",
             answers: ["Rangamati", "Meherpur", "Jhalokathi", "Lakkhipur"]
         },

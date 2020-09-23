@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import m5 from "../src/img/m5.svg";
 import win from "../src/img/win.png";
-import acceptEng from "../src/img/acceptEng.svg";
-import acceptBan from "../src/img/acceptBan.svg";
+import acceptEng from "../src/img/acceptEng.png";
+import acceptBan from "../src/img/acceptBan.png";
 import play from "../src/img/playAgain.svg";
+import playeng from "../src/img/winplayeng.svg";
+import playban from "../src/img/winplayban.svg";
 import logo from "../src/img/logo1.png";
 import banglaQ from "../src/banglaqns";
 import englishQ from "../src/englishqns";
@@ -67,6 +69,8 @@ class App extends Component {
     this.trm = new Image().src = trm;
     this.trmL = new Image().src = trmL;
     this.play = new Image().src = play
+    this.playeng = new Image().src = playeng
+    this.playban = new Image().src = playban
     this.languageImg = new Image().src = language;
     // this.adds.forEach((image) => {
     //   new Image().src = image
@@ -76,7 +80,7 @@ class App extends Component {
     script.src = "https://connect.facebook.net/en_US/fbinstant.6.3.js"
     script.id = "fbinstant"
     document.body.appendChild(script);
-    this.marginvh = window.innerWidth / window.innerHeight < .5 ? "20vh" : "18vh"
+    this.marginvh = window.innerWidth / window.innerHeight < .5 ? "21vh" : "18vh"
 
     let bquestion = []
     let equestion = []
@@ -277,9 +281,11 @@ class App extends Component {
   }
 
   tryScreen() {
+    const playy=this.state.level >= this.state.questions.length?this.state.language==="eng"?this.playeng:this.playban:this.play
     return (
+
       <div style={{
-        display: "flex", minHeight: "100vh", flexDirection: 'column', backgroundImage: `url(${this.play})`,
+        display: "flex", minHeight: "100vh", flexDirection: 'column', backgroundImage: `url(${playy})`,
         backgroundPosition: 'center',
         backgroundSize: '100% 100%',
         backgroundColor: imageBackgroundColor,
