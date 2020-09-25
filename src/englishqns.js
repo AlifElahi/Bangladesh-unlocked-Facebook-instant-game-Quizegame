@@ -64,6 +64,7 @@ const englishQ = [
             answer: "Suhrawardy Uddyan",
             answers: ["Ramna Park", "Botanical Garden", "Suhrawardy Uddyan", "None mentioned here"]
         },
+        // The widest river in Bangladesh is:
         {
             question: "The widest river in Bangladesh is:",
             answer: "Meghna",
@@ -199,6 +200,11 @@ const englishQ = [
             question: "The river Naf runs through Bangladesh along the border of:",
             answer: "Myanmar",
             answers: ["India", "Myanmar", "Nepal", "Thailand"]
+        },
+        {
+            question: "Which country was the first to accept the independence and sovereignty rights of Bangladesh?",
+            answer: "India",
+            answers: ["Nepal", "Russia", "India", "Sri Lanka"]
         },
         {
             question: "Liberation War of Bangladesh took place in the following year:",
@@ -337,8 +343,8 @@ const englishQ = [
         },
         {
             question: "When was the Mujibnagar Government formed?",
-            answer: "10 April 1971",
-            answers: ["10 April 1971", "26th March 1971", "7th March 1971", "25th March 1971"]
+            answer: "10th April 1971",
+            answers: ["10th April 1971", "26th March 1971", "7th March 1971", "25th March 1971"]
         },
         {
             question: "When was University of Dhaka established?",
@@ -379,8 +385,8 @@ const englishQ = [
         },
         {
             question: "When was currency first issued in Bangladesh?",
-            answer: "4 March 1972",
-            answers: ["4 March 1972", "16 December 1972", "7 March 1972", "4 February 1972"]
+            answer: "4th March 1972",
+            answers: ["4th March 1972", "16th December 1972", "7th March 1972", "4th February 1972"]
         },
         {
             question: "According to the official statistics, which district of Bangladesh has the highest literacy rate?",
@@ -526,8 +532,8 @@ const englishQ = [
         {
             question: "Identify the site in the picture above:",
             image: AhsanManjil,//10 number ques
-            answer: "Ahsan Manjil",
-            answers: ["Ahsan Manjil", "Lalbagh Fort", "Supreme Court", "Sonargaon Museum"]
+            answer: "Ahsan Manzil",
+            answers: ["Ahsan Manzil", "Lalbagh Fort", "Supreme Court", "Sonargaon Museum"]
         },
         {
             question: "Laptop 'DOEL' is produced by:",
@@ -557,7 +563,7 @@ const englishQ = [
             question: "Identify the site in the picture above:",
             image: LalbaghFort,//15 no ques
             answer: "Lalbagh Fort ",
-            answers: ["Lalbagh Fort ", "Sonargaon Mosque", "Hazrat Shahjalal Mazar Sharif", "Ahsan Manjil"]
+            answers: ["Lalbagh Fort ", "Sonargaon Mosque", "Hazrat Shahjalal Mazar Sharif", "Ahsan Manzil"]
 
         }, 
         {
@@ -577,12 +583,12 @@ const englishQ = [
         } ,
         {
           question: 'Under Which ministry is the Submarine Cable Project?',
-          answer: 'Ministry of Post and tele-communication ',
+          answer: 'Ministry of Post and Tele-communication ',
           answers: [
             'Ministry of Science and TCT',
             'Ministry of Finance',
             'Ministry of Commerce',
-            'Ministry of Post and tele-communication '
+            'Ministry of Post and Tele-communication '
           ]
         } ,
         {
@@ -753,7 +759,7 @@ const englishQ = [
             'Prime Minister ',
             'President',
             'Speaker',
-            'Supreme judicial council'
+            'Supreme Judicial Council'
           ]
         } ,
         {
@@ -778,8 +784,8 @@ const englishQ = [
         },
         {
             question: "In 1971, where did the Pakistan Army Surrender?",
-            answer: "Ramna Race Course Garden",
-            answers: ["Ramna Race Course Garden", "Gono Bhaban", "Dhaka Cantonment", "Paltan Maidan"]
+            answer: "Ramna RaceCourse Garden",
+            answers: ["Ramna RaceCourse Garden", "Gono Bhaban", "Dhaka Cantonment", "Paltan Maidan"]
         },
         {
             question: "In the 1971 liberation war, how many Military sectors were Bangladesh divided into?",
@@ -797,7 +803,7 @@ const englishQ = [
             answers: ["Royal Bengal Tiger", "Leopard Tiger", "Elephant", "Doyle/Wagtail"]
         },
         {
-            question: "Who represented Bangladesh in the surrender ceremony of the Pakistani forces to the allied forces on 16 December 1971 at the Racecourse ground?",
+            question: "Who represented Bangladesh in the surrender ceremony of the Pakistani forces to the allied forces on 16 December 1971 at the Racecourse ground? ",
             answer: "Air Vice Marshal Abdul Karim Khandker",
             answers: ["Air Vice Marshal Abdul Karim Khandker", "Kader Siddique ", "Lt. Gen Jaggit Singh Arora ", "Col. M.A.G Osmani"]
         },
@@ -901,10 +907,10 @@ const englishQ = [
           question: 'Tariff Commission functions under the: ',
           answer: 'Ministry of Commerce',
           answers: [
-            'Ministry of business',
+            'Ministry of Business',
             'Ministry of Commerce',
             'Ministry of Finance',
-            'Ministry of defense'
+            'Ministry of Defense'
           ]
         } ,
         {
@@ -1249,7 +1255,7 @@ const englishQ = [
         {
             question: "How many districts share their borders with India?",
             answer: "30",
-            answers: ["30", "33", "40", "34"]
+            answers: ["30", "33", "32", "34"]
         },
         {
             question: "Which famous musician sang for the liberation War in 1971?",
@@ -1399,8 +1405,8 @@ const englishQ = [
         },
         {
             question: "When was the Bangabandhu satalite 1 launched?",
-            answer: "May 11 ,2018 ,2.14 AM GMT +6",
-            answers: ["May 11 ,2018 ,2.14 AM GMT +6", "May 12, 2018, 2:14 AM GMT+6", "March 26 ,2018,2.14 AM GMT +6", "December 16 2018 ,2.14AM GMT +6"]
+            answer: "May 11, 2018,2.14 AM GMT +6",
+            answers: ["May 11, 2018,2.14 AM GMT +6", "May 12, 2018, 2:14 AM GMT+6", "March 26, 2018,2.14 AM GMT +6", "December 16, 2018,2.14AM GMT +6"]
         },
         {
             question: "Which of the following is the largest District of Bangladesh in terms of its area size?",
@@ -1414,8 +1420,8 @@ const englishQ = [
         },
         {
             question: "When was the water treaty signed between Bangladesh and India?",
-            answer: "12 December 1996",
-            answers: ["12 December 1996", "16th December 1997", "17 March 1995", "26th March 1944"]
+            answer: "12th December 1996",
+            answers: ["12th December 1996", "16th December 1997", "17th March 1995", "26th March 1944"]
         },
         {
             question: "The first European traders to arrive in Bangladesh were the:",
