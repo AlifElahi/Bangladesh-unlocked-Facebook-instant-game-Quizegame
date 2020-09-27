@@ -10,8 +10,8 @@ const ansOptionColor="#FFC300";
 const scriptUrl="https://script.google.com/macros/s/AKfycbwxwgVprK5HoOqzSNJvN98VcR6oN41dFK_KgeS9-PcVaoMSbPA/exec"
 const fontER = 'univers-condensed-medium'
 const fontEB = 'univers-condensed-bold'
-const fontBR = 'Bangla'
-const fontBB = 'Bangla'
+const fontBR = 'kalpurush'
+const fontBB = 'kalpurush'
 const broderR = 7
 
 export {greenColor,broderR,redColor,addPoition,addduration,lvl5duretion,answerColorDuration,imageBackgroundColor,ansOptionColor,scriptUrl,fontER,fontBR,fontEB,fontBB }

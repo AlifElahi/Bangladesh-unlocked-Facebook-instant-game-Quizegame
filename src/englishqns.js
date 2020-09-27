@@ -10,6 +10,7 @@ import LanguageMovement from './img/qnsImage/LanguageMovement.jpg'
 import SeventhMarchSymbol from './img/qnsImage/7thMarchSymbol.jpg'
 import HazratShahjalalMazarSharif from './img/qnsImage/HazratShahjalalMazarSharif.jpg'
 import GutiaBaitulAmanJameMasjid from './img/qnsImage/GutiaBaitulAmanJameMasjid.jpg'
+import TwoMamByQuamrulHassan from './img/qnsImage/TwoMamByQuamrulHassan.jpg'
 const englishQ = [
     //  level1
     [
