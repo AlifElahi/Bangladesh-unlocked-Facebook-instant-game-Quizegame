@@ -55,7 +55,7 @@ const englishQ = [
             answers: ["17 March", "10 January", "10 February", "17 April"]
         },
         {
-            question: "The cyclone named Ayla  hit Bangladesh in:",
+            question: "The cyclone named 'Ayla' hit Bangladesh in:",
             answer: "2009",
             answers: ["2009", "1991", "2007", "1998"]
         },
@@ -68,7 +68,7 @@ const englishQ = [
         {
             question: "The widest river in Bangladesh is:",
             answer: "Meghna",
-            answers: ["Meghna", "Jamuna", "Padma", "Brahmmatputra"]
+            answers: ["Meghna", "Jamuna", "Padma", "Brahmmaputra"]
         },
         {
             question: "21st February is marked as the:",
@@ -272,8 +272,8 @@ const englishQ = [
             'Prema Bishash'
           ]
         } ,
-        {
-          question: 'Who was the architect of ‘Jatiya Sriti Shoudho’?',
+       {
+          question: 'Who was the architect of `Jatiya Sriti Shoudho` ?',
           answer: 'Sayed Moinul Islam ',
           answers: [
             'Lui Kan',
@@ -357,7 +357,7 @@ const englishQ = [
             answers: ["1971", "1969", "1970", "1990"]
         },
         {
-            question: "Who was the architect of ‘Jatiyo Sriti Shoudho?",
+            question: "Who was the architect of 'Jatiyo Sriti Shoudho'?",
             answer: "Syed Mainul Hossian",
             answers: ["Syed Mainul Hossian", "Hamidur Rahman", "Lui Khan", "Hamiduzzaman Khan"]
         },
@@ -736,10 +736,10 @@ const englishQ = [
           question: 'When was the First constitution of Bangladesh raised at constituent assembly?',
           answer: '4th November,1972',
           answers: [
-            '4th November,1972',
-            '17th April 1971',
-            '12th October 1971',
-            '3rd November,1972'
+            '4th November, 1972',
+            '17th April, 1971',
+            '12th October, 1971',
+            '3rd November, 1972'
           ]
         } ,
         {
@@ -773,7 +773,7 @@ const englishQ = [
     //  level6
     [
         {
-            question: "How many Government EPZ (export Processing Zone) are in Bangladesh?",
+            question: "How many Government EPZ (Export Processing Zone) are in Bangladesh?",
             answer: "8",
             answers: ["8", "10", "20", "5"]
         },
@@ -784,8 +784,8 @@ const englishQ = [
         },
         {
             question: "In 1971, where did the Pakistan Army Surrender?",
-            answer: "Ramna RaceCourse Garden",
-            answers: ["Ramna RaceCourse Garden", "Gono Bhaban", "Dhaka Cantonment", "Paltan Maidan"]
+            answer: "Ramna Racecourse Ground",
+            answers: ["Ramna Racecourse Ground", "Gono Bhaban", "Dhaka Cantonment", "Paltan Maidan"]
         },
         {
             question: "In the 1971 liberation war, how many Military sectors were Bangladesh divided into?",
@@ -1345,7 +1345,7 @@ const englishQ = [
         {
           question: 'For measuring national GDP, our economic sectors are divided into:',
           answer: '15 sectors ',
-          answers: [ '12 sectors ', '13 Sectors ', '14 sectors ', '15 sectors ' ]
+          answers: [ '12 sectors ', '13 sectors ', '14 sectors ', '15 sectors ' ]
         } ,
         {
           question: 'What is the main source of earning foreign currency for the economy?',
