@@ -735,7 +735,7 @@ const englishQ = [
         } ,
         {
           question: 'When was the First constitution of Bangladesh raised at constituent assembly?',
-          answer: '4th November,1972',
+          answer: '4th November, 1972',
           answers: [
             '4th November, 1972',
             '17th April, 1971',
@@ -1026,16 +1026,16 @@ const englishQ = [
             'Upazila Parishad'
           ]
         } ,
-        {
-          question: 'A person who has not become a voter in any part of the country, in the parliamentary election:',
-          answer: 'Cannot be a candidate in any order ',
-          answers: [
-            'can become candidate with the permission of the Election Commission',
-            'can become candidate with the permission of the concerned party authority',
-            'Cannot be a candidate in any order ',
-            'Can Become candidate with the permission of the Ministry of Law'
-          ]
-        } ,
+        // {
+        //   question: 'A person who has not become a voter in any part of the country, in the parliamentary election:',
+        //   answer: 'Cannot be a candidate in any order ',
+        //   answers: [
+        //     'Can become candidate with the permission of the Election Commission',
+        //     'Can become candidate with the permission of the concerned party authority',
+        //     'Can not be a candidate in any order ',
+        //     'Can become candidate with the permission of the Ministry of Law'
+        //   ]
+        // } ,
         {
           question: 'The following is most used as fuel for power generation in Bangladesh:',
           answer: 'Natural Gas ',
@@ -1104,7 +1104,7 @@ const englishQ = [
         },
         {
             question: "Which district is smallest in terms of the area size?",
-            answer: "Narayangonj",
+            answer: "Meherpur",
             answers: ["Narayangonj", "Mushigonj", "Tangail", "Meherpur"]
         },
         {
@@ -1406,8 +1406,8 @@ const englishQ = [
         },
         {
             question: "When was the Bangabandhu satalite 1 launched?",
-            answer: "May 11, 2018,2.14 AM GMT +6",
-            answers: ["May 11, 2018,2.14 AM GMT +6", "May 12, 2018, 2:14 AM GMT+6", "March 26, 2018,2.14 AM GMT +6", "December 16, 2018,2.14AM GMT +6"]
+            answer: "May 11, 2018,2:14 AM GMT +6",
+            answers: ["May 11, 2018,2:14 AM GMT +6", "May 12, 2018, 2:14 AM GMT+6", "March 26, 2018,2:14 AM GMT +6", "December 16, 2018,2:14AM GMT +6"]
         },
         {
             question: "Which of the following is the largest District of Bangladesh in terms of its area size?",

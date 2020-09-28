@@ -1,10 +1,30 @@
+@font-face {
+  font-family: 'Kalpurush';
+  src: url(./font/kalpurush.svg) format('svg'),
+       url(./font/kalpurush.ttf) format('truetype'),
+       url(./font/kalpurush.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
+@font-face {
+  font-family: 'Kalpurush';
+  src: url(./font/kalpurush.eot);
+  src: url(./font/kalpurush.eot?#iefix) format('embedded-opentype'),
+       url(./font/kalpurush.woff2) format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 /* @font-face {
   font-family: 'SutonnyMJ';
   src: local('SutonnyMJ'), url(./font/SutonnyMJ\ Regular.ttf) format('truetype');
 } */
 
   
+
+
+
+
 @font-face {
 	font-family: 'univers-condensed-medium';
 	src: url(./font/univers-condensed-medium.eot);
@@ -43,5 +63,5 @@ code {
   flex-direction: column;
   min-height: 100vh;
   justify-content: flex-end;
-  ;
+  
 }

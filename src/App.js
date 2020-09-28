@@ -41,6 +41,8 @@ class App extends Component {
     this.trmL = new Image().src = trmL;
     this.languageImg = new Image().src = language;
     this.bquestions = []
+    this.banglaQ=banglaQ
+    this.englishQ=englishQ
     this.equestions = []
     this.contextId = null
     this.contextType = null
@@ -86,6 +88,11 @@ class App extends Component {
     let equestion = []
     let add = []
     let rand = []
+    for (let x = 0; x < 10; x++) {
+      this.banglaQ[x]=await this.shuffleArray(this.banglaQ[x])
+      this.englishQ[x]=await this.shuffleArray(this.englishQ[x])
+      
+    }
     for (let i = 0; rand.length < addPoition.length; i++) {
       let w = Math.floor((Math.random() * 11) + 0)
       if (!rand.includes(w)) {
@@ -97,8 +104,8 @@ class App extends Component {
       }
     }
     for (let i = 0; i < 10; i++) {
-      let q = banglaQ[i][Math.floor((Math.random() * banglaQ[i].length) + 0)]
-      let eq = englishQ[i][Math.floor((Math.random() * englishQ[i].length) + 0)]
+      let q = this.banglaQ[i][Math.floor((Math.random() * banglaQ[i].length) + 0)]
+      let eq = this.englishQ[i][Math.floor((Math.random() * englishQ[i].length) + 0)]
       q.answers = await this.shuffleArray(q.answers);
       eq.answers = await this.shuffleArray(eq.answers);
       bquestion.push(q);
@@ -147,11 +154,14 @@ class App extends Component {
     let add = []
     let qu = null
     if (this.state.language === 'eng') {
-      qu = englishQ
+      qu = this.englishQ
     }
     if (this.state.language === 'ban') {
-      qu = banglaQ
+      qu = this.banglaQ
 
+    }
+    for (let x = 0; x < 10; x++) {
+      qu[x]=await this.shuffleArray(this.qu[x])      
     }
     let rand = []
     for (let i = 0; rand.length < addPoition.length; i++) {
@@ -165,7 +175,7 @@ class App extends Component {
       }
     }
     for (let i = 0; i < 10; i++) {
-    
+      
       let q = qu[i][Math.floor((Math.random() * banglaQ[i].length) + 0)]
 
       q.answers = await this.shuffleArray(q.answers);
@@ -367,7 +377,7 @@ class App extends Component {
             }>
               <text style={
                 {
-                  fontFamily: this.fontB, fontWeight: 900, marginBottom: "5px", marginTop: '10px', fontSize: 'x-large'
+                  fontFamily: this.fontB, fontWeight: 900, marginBottom: "5px", marginTop: '10px', fontSize: this.state.language==='eng'?'x-large':'large',
                 }
               }>{this.terms.title}</text>
               <ul >
@@ -469,7 +479,7 @@ class App extends Component {
           this.setState({ tryAgain: true });
           this.common()
         },
-        addduration);
+        6000);
     }
       if (addPoition.includes(this.state.level)) {
         this.setState({ showAdds: true, colorChange: false })
@@ -513,19 +523,19 @@ class App extends Component {
     let bgc = this.state.colorChange ? txt === this.state.questions[this.state.level].answer ? greenColor : txt === this.answerGiven ? redColor : 'white' : 'white'
     let fgc = this.state.colorChange ? txt === this.state.questions[this.state.level].answer ? 'white' : txt === this.answerGiven ? 'white' : 'black' : 'black'
     const button = {
-      borderTopRightRadius: this.broderR, borderBottomRightRadius: this.broderR, backgroundColor: bgc, alignItems: 'center', width: "62%", height: "42px",
+      borderTopRightRadius: this.broderR, borderBottomRightRadius: this.broderR, backgroundColor: bgc, alignItems: 'center', width: "62%", height: this.state.language==="eng"? "42px":"43px",
       marginTop: "13px", display: "flex", justifyContent: 'center', cursor: "pointer"
     };
     return (
       <div onClick={() => this.handelAns(txt)} style={{ display: "flex", justifyContent: 'center', alignItems: "center" }}>
         <div style={{
-          borderTopLeftRadius: this.broderR, borderBottomLeftRadius: this.broderR, backgroundColor: ansOptionColor, alignItems: 'center', width: "10%", height: "42px",
+          borderTopLeftRadius: this.broderR, borderBottomLeftRadius: this.broderR, backgroundColor: ansOptionColor, alignItems: 'center', width: "10%", height: this.state.language==="eng"? "42px":"43px",
           marginTop: "13px", justifyContent: 'center', display: "flex", cursor: "pointer"
         }} >
           <p style={{ fontWeight: 'bold', fontFamily: fontEB, color: 'white', fontSize: 'xx-large' }}>{txt1}</p>
         </div>
         <div style={button} >
-          <p style={{ fontWeight: '600', fontFamily: this.fontR, color: fgc, lineHeight: "120%", fontSize: "12.5pt", padding: "5px", paddingTop: "3px", paddingBottom: '3px' }}>{txt}</p>
+          <p style={{ fontWeight: '600', fontFamily: this.fontR, color: fgc, lineHeight: this.state.language==='eng'?"100%":"120%", fontSize: "12.0pt", padding: "5px", paddingTop: "3px", paddingBottom: '3px' }}>{txt}</p>
         </div>
       </div>
     )
@@ -561,7 +571,7 @@ class App extends Component {
                   <text style={{
                     color: "white", fontFamily: this.fontB, textAlign: "center", fontWeight: '700',
                     fontSize: 'x-large', marginTop: '15px', marginBottom: "25px", paddingLeft: "8%",
-                    lineHeight:  "100%", paddingRight: "8%"
+                    lineHeight: this.fontB==='Kalpurush'?"110%": "110%", paddingRight: "8%"
                   }}>{prop.question}</text>
                   {this.ansBtn(prop.answers[0], "A")}{this.ansBtn(prop.answers[1], "B")}{this.ansBtn(prop.answers[2], "C")}{this.ansBtn(prop.answers[3], "D")}
                 </div>
