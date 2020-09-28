@@ -27,6 +27,7 @@ class App extends Component {
       questions: [],
       language: '',
       level: 0,
+      timer:15,
       showAdds: false,
       lvl5Modal: false,
       tryAgain: false,
@@ -53,6 +54,7 @@ class App extends Component {
     this.fontB = fontEB
     this.fontR = fontER
     this.marginvh = 0
+    this.intervalId={}
     this.terms = terms.termE
     this.broderR = broderR
     this.acceptBtn = new Image().src = acceptEng
@@ -149,6 +151,37 @@ class App extends Component {
 
   }
 
+  timerFunction() {
+    // for (let k = 0; k < 15 && this.state.showTimer; k++) {
+      this.setState({timer:15})
+    this.intervalId=  setInterval(() => {
+        const o=this.state.timer - 1
+        console.log(o);
+        if(o<=0){
+          this.funLvl(false)
+          clearInterval(this.intervalId)
+          
+        }
+        this.setState({ timer: o });
+      }, 1000);
+      // (
+      //   () => {
+      //     if (this.state.showTimer) {
+      //       console.log("lllaa1");
+      //       if(this.state.timer>1){
+      //       console.log("lllaa");
+      //       const o=this.state.timer - 1
+      //       this.setState({ timer: o });}
+      //       else{
+      //         this.funLvl(false)
+      //       }
+      //     }
+      //   },
+      //   1000);
+
+    // }
+  }
+
   async common() {
     let question = []
     let add = []
@@ -200,8 +233,6 @@ class App extends Component {
       this.fontR = fontBR
       this.terms = terms.termB
       this.acceptBtn = new Image().src = acceptBan
-
-
     }
     this.setState({ language: str, questions: q, conditionPage: true })
   }
@@ -288,6 +319,7 @@ class App extends Component {
 
   palyAgain() {
     this.setState({ level: 0, showAdds: false, lvl5Modal: false, tryAgain: false })
+    this.timerFunction()
   }
 
   tryScreen() {
@@ -389,7 +421,7 @@ class App extends Component {
               
             </div>
 
-            <img src={this.acceptBtn} alt=" " style={{ width: "60%", height: "60px", marginBottom: '0vh', marginTop: '15px' }} onClick={() => this.setState({ conditionPage: false })} />
+            <img src={this.acceptBtn} alt=" " style={{ width: "60%", height: "60px", marginBottom: '0vh', marginTop: '15px' }} onClick={() => {this.setState({ conditionPage: false }) ; this.timerFunction()}} />
           </div>
         </div>
       </div>
@@ -448,6 +480,7 @@ class App extends Component {
   handelAns = (str) => {
     // thicolorChange
     if (this.state.colorChange) return
+    clearInterval(this.intervalId)
     this.answerGiven = str;
     this.setState({ colorChange: true })
     setTimeout(
@@ -474,10 +507,10 @@ class App extends Component {
     // console.log(this.state.level);
     if (boo) {
       if (this.state.level === this.state.questions.length - 1) {this.postname("won")
+      this.common()
       setTimeout(
         () => {
           this.setState({ tryAgain: true });
-          this.common()
         },
         6000);
     }
@@ -486,6 +519,7 @@ class App extends Component {
         setTimeout(
           () => {
             this.setState({ level: this.state.level + 1, showAdds: false });
+            this.timerFunction()
             this.adds.shift();
           },
           addduration
@@ -502,15 +536,16 @@ class App extends Component {
       }
       else {
         this.setState({ level: this.state.level + 1, colorChange: false })
+        this.timerFunction()
         // console.log(this.state.level, "kk");
       }
 
     } else {
       this.setState({ showAdds: true, colorChange: false })
+      this.common()
       setTimeout(
         () => {
           this.setState({ showAdds: false, tryAgain: true });
-          this.common()
         },
         addduration
       );
@@ -576,6 +611,7 @@ class App extends Component {
                   {this.ansBtn(prop.answers[0], "A")}{this.ansBtn(prop.answers[1], "B")}{this.ansBtn(prop.answers[2], "C")}{this.ansBtn(prop.answers[3], "D")}
                 </div>
                 {/* </div> */}
+                <text style={{color: 'white',position:"absolute",top:6,right:30}}>{this.state.timer}</text>
 
               </div>
               : this.languageScreen()}
