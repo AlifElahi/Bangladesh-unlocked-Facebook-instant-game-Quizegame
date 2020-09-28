@@ -154,15 +154,15 @@ class App extends Component {
     let add = []
     let qu = null
     if (this.state.language === 'eng') {
-      qu = this.englishQ
+      qu = englishQ
     }
     if (this.state.language === 'ban') {
-      qu = this.banglaQ
+      qu = banglaQ
 
     }
-    for (let x = 0; x < 10; x++) {
-      qu[x]=await this.shuffleArray(this.qu[x])      
-    }
+    // for (let x = 0; x < 10; x++) {
+    //   qu[x]=await this.shuffleArray(this.qu[x])      
+    // }
     let rand = []
     for (let i = 0; rand.length < addPoition.length; i++) {
       let w = Math.floor((Math.random() * 11) + 0)
