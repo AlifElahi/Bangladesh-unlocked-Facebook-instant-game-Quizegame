@@ -408,8 +408,8 @@ class App extends Component {
 
   }
 
-  async shareOnFb(){
-    await window.FBInstant.shareAsync({
+   shareOnFb(){
+     window.FBInstant.shareAsync({
       intent: 'REQUEST',
       image: image.shareImage,
       text: `I just have scored ${this.score}/10, you should also try . 
@@ -419,6 +419,7 @@ class App extends Component {
       // continue with the game.
     });
   }
+  
 
   termsScreen() {
     let heightinvh = window.innerWidth / window.innerHeight < .5 ? "56vh" : "66vh"
