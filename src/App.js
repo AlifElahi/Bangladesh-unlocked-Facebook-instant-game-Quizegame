@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import m5 from "../src/img/m5.svg";
 import win from "../src/img/win.png";
+import fb from "../src/img/facebook1.svg";
 import acceptEng from "../src/img/acceptEng.png";
 import acceptBan from "../src/img/acceptBan.png";
 import play from "../src/img/playAgain.svg";
@@ -27,10 +28,10 @@ class App extends Component {
       questions: [],
       language: '',
       level: 0,
-      timer:15,
+      timer: 15,
       showAdds: false,
       lvl5Modal: false,
-      tryAgain: false,
+      tryAgain: true,
       conditionPage: false
     };
     this.img = image.backImages
@@ -39,27 +40,29 @@ class App extends Component {
     this.win = new Image().src = win;
     this.logo = new Image().src = logo;
     this.trm = new Image().src = trm;
+    this.fb = new Image().src = fb;
     this.trmL = new Image().src = trmL;
     this.languageImg = new Image().src = language;
     this.bquestions = []
-    this.banglaQ=banglaQ
-    this.englishQ=englishQ
+    this.banglaQ = banglaQ
+    this.englishQ = englishQ
     this.equestions = []
     this.contextId = null
     this.contextType = null
     this.answerGiven = null
     this.playerName = null
+    this.score=0;
     this.playerPic = null
     this.playerId = null
     this.fontB = fontEB
     this.fontR = fontER
     this.marginvh = 0
-    this.intervalId={}
+    this.intervalId = {}
     this.terms = terms.termE
     this.broderR = broderR
     this.acceptBtn = new Image().src = acceptEng
     this.play = null
-    this.tt=[];
+    this.tt = [];
   }
   async componentDidMount() {
     this.img.forEach((image) => {
@@ -91,9 +94,9 @@ class App extends Component {
     let add = []
     let rand = []
     for (let x = 0; x < 10; x++) {
-      this.banglaQ[x]=await this.shuffleArray(this.banglaQ[x])
-      this.englishQ[x]=await this.shuffleArray(this.englishQ[x])
-      
+      this.banglaQ[x] = await this.shuffleArray(this.banglaQ[x])
+      this.englishQ[x] = await this.shuffleArray(this.englishQ[x])
+
     }
     for (let i = 0; rand.length < addPoition.length; i++) {
       let w = Math.floor((Math.random() * 11) + 0)
@@ -153,31 +156,31 @@ class App extends Component {
 
   timerFunction() {
     // for (let k = 0; k < 15 && this.state.showTimer; k++) {
-      this.setState({timer:15})
-    this.intervalId=  setInterval(() => {
-        const o=this.state.timer - 1
-        console.log(o);
-        if(o<=0){
-          this.funLvl(false)
-          clearInterval(this.intervalId)
-          
-        }
-        this.setState({ timer: o });
-      }, 1000);
-      // (
-      //   () => {
-      //     if (this.state.showTimer) {
-      //       console.log("lllaa1");
-      //       if(this.state.timer>1){
-      //       console.log("lllaa");
-      //       const o=this.state.timer - 1
-      //       this.setState({ timer: o });}
-      //       else{
-      //         this.funLvl(false)
-      //       }
-      //     }
-      //   },
-      //   1000);
+    this.setState({ timer: 15 })
+    this.intervalId = setInterval(() => {
+      const o = this.state.timer - 1
+      console.log(o);
+      if (o <= 0) {
+        this.funLvl(false)
+        clearInterval(this.intervalId)
+
+      }
+      this.setState({ timer: o });
+    }, 1000);
+    // (
+    //   () => {
+    //     if (this.state.showTimer) {
+    //       console.log("lllaa1");
+    //       if(this.state.timer>1){
+    //       console.log("lllaa");
+    //       const o=this.state.timer - 1
+    //       this.setState({ timer: o });}
+    //       else{
+    //         this.funLvl(false)
+    //       }
+    //     }
+    //   },
+    //   1000);
 
     // }
   }
@@ -208,7 +211,7 @@ class App extends Component {
       }
     }
     for (let i = 0; i < 10; i++) {
-      
+
       let q = qu[i][Math.floor((Math.random() * banglaQ[i].length) + 0)]
 
       q.answers = await this.shuffleArray(q.answers);
@@ -322,8 +325,8 @@ class App extends Component {
     this.timerFunction()
   }
 
-  tryScreen() {
-    const playy=this.state.level >= this.state.questions.length?this.state.language==="eng"?this.playeng:this.playban:this.play
+  tryScreen( x) {
+    const playy = this.state.level >= this.state.questions.length ? this.state.language === "eng" ? this.playeng : this.playban : this.play
     return (
 
       <div style={{
@@ -351,7 +354,7 @@ class App extends Component {
           marginTop: '20px',
           height: '40px',
           position: "absolute",
-          bottom: '30vh'
+          bottom: '33vh'
         }}>
           <div onClick={() => window.FBInstant.quit()} style={{
             display: "flex", minHeight: "40px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
@@ -373,16 +376,54 @@ class App extends Component {
           </div>
         </div>
 
-
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          width: "100vw",
+          justifyContent: 'center',
+          marginTop: '20px',
+          height: '40px',
+          position: "absolute",
+          bottom: '25vh'
+        }}>
+          <div onClick={() => this.shareOnFb()} style={{
+            display: "flex", minHeight: "40px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
+            minWidth: "30%",
+            justifyContent:"center",
+            backgroundColor: '#FCB314',
+            // paddingLeft:"10px",
+            alignItems: "center", cursor: "pointer"
+          }}>
+            <img src={fb} alt="Logo" style={{
+          width: '20%',height:'20%',color:'white'
+        }} />
+            <text style={{ fontFamily: this.fontR, color: 'black', fontWeight: '700', fontSize: '22px', padding: '3px' }}>{this.terms.share}</text>
+          </div>
+        </div>
       </div>
+
+
+
     )
 
   }
-  
+
+  async shareOnFb(){
+    await window.FBInstant.shareAsync({
+      intent: 'REQUEST',
+      image: image.shareImage,
+      text: `I just have scored ${this.score}/10, you should also try . 
+      know yourself, know your country`,
+      data: { myReplayData: '...' },
+    }).then(function() {
+      // continue with the game.
+    });
+  }
+
   termsScreen() {
     let heightinvh = window.innerWidth / window.innerHeight < .5 ? "56vh" : "66vh"
     let marginvh = window.innerWidth / window.innerHeight > .5 ? "11vh" : "7vh"
-    this.tt=this.terms.list ?this.terms.list:[];
+    this.tt = this.terms.list ? this.terms.list : [];
     return (
       <div style={{
         display: "flex", flexDirection: 'column', backgroundImage: `url(${this.trm})`,
@@ -409,25 +450,25 @@ class App extends Component {
             }>
               <text style={
                 {
-                  fontFamily: this.fontB, fontWeight: 900, marginBottom: "5px", marginTop: '10px', fontSize: this.state.language==='eng'?'x-large':'large',
+                  fontFamily: this.fontB, fontWeight: 900, marginBottom: "5px", marginTop: '10px', fontSize: this.state.language === 'eng' ? 'x-large' : 'large',
                 }
               }>{this.terms.title}</text>
               <ul >
                 {this.terms.list.map(item => (
-                  <li  style={{ paddingRight: '10px', marginBottom: '5px', fontFamily: this.fontR ,fontWeight: 400, fontSize:'14.5pt'}}>{item} </li>
+                  <li style={{ paddingRight: '10px', marginBottom: '5px', fontFamily: this.fontR, fontWeight: 400, fontSize: '14.5pt' }}>{item} </li>
                 ))}
               </ul>
-              
-              
+
+
             </div>
 
-            <img src={this.acceptBtn} alt=" " style={{ width: "60%", height: "60px", marginBottom: '0vh', marginTop: '15px' }} onClick={() => {this.setState({ conditionPage: false }) ; this.timerFunction()}} />
+            <img src={this.acceptBtn} alt=" " style={{ width: "60%", height: "60px", marginBottom: '0vh', marginTop: '15px' }} onClick={() => { this.setState({ conditionPage: false }); this.timerFunction() }} />
           </div>
         </div>
       </div>
     )
   }
-  
+
   modal() {
 
     let img
@@ -490,6 +531,7 @@ class App extends Component {
         } else {
           const ll = this.state.level
           this.postname(ll)
+          this.score=this.state.level+1
           this.funLvl(false);
           // this.postname(this.state.level);
 
@@ -506,14 +548,16 @@ class App extends Component {
   funLvl = (boo) => {
     // console.log(this.state.level);
     if (boo) {
-      if (this.state.level === this.state.questions.length - 1) {this.postname("won")
-      this.common()
-      setTimeout(
-        () => {
-          this.setState({ tryAgain: true });
-        },
-        6000);
-    }
+      if (this.state.level === this.state.questions.length - 1) {
+          this.score=10
+          this.postname("won")
+        this.common()
+        setTimeout(
+          () => {
+            this.setState({ tryAgain: true });
+          },
+          6000);
+      }
       if (addPoition.includes(this.state.level)) {
         this.setState({ showAdds: true, colorChange: false })
         setTimeout(
@@ -558,19 +602,19 @@ class App extends Component {
     let bgc = this.state.colorChange ? txt === this.state.questions[this.state.level].answer ? greenColor : txt === this.answerGiven ? redColor : 'white' : 'white'
     let fgc = this.state.colorChange ? txt === this.state.questions[this.state.level].answer ? 'white' : txt === this.answerGiven ? 'white' : 'black' : 'black'
     const button = {
-      borderTopRightRadius: this.broderR, borderBottomRightRadius: this.broderR, backgroundColor: bgc, alignItems: 'center', width: "62%", height: this.state.language==="eng"? "42px":"43px",
+      borderTopRightRadius: this.broderR, borderBottomRightRadius: this.broderR, backgroundColor: bgc, alignItems: 'center', width: "62%", height: this.state.language === "eng" ? "42px" : "43px",
       marginTop: "13px", display: "flex", justifyContent: 'center', cursor: "pointer"
     };
     return (
       <div onClick={() => this.handelAns(txt)} style={{ display: "flex", justifyContent: 'center', alignItems: "center" }}>
         <div style={{
-          borderTopLeftRadius: this.broderR, borderBottomLeftRadius: this.broderR, backgroundColor: ansOptionColor, alignItems: 'center', width: "10%", height: this.state.language==="eng"? "42px":"43px",
+          borderTopLeftRadius: this.broderR, borderBottomLeftRadius: this.broderR, backgroundColor: ansOptionColor, alignItems: 'center', width: "10%", height: this.state.language === "eng" ? "42px" : "43px",
           marginTop: "13px", justifyContent: 'center', display: "flex", cursor: "pointer"
         }} >
           <p style={{ fontWeight: 'bold', fontFamily: fontEB, color: 'white', fontSize: 'xx-large' }}>{txt1}</p>
         </div>
         <div style={button} >
-          <p style={{ fontWeight: '600', fontFamily: this.fontR, color: fgc, lineHeight: this.state.language==='eng'?"100%":"120%", fontSize: "12.0pt", padding: "5px", paddingTop: "3px", paddingBottom: '3px' }}>{txt}</p>
+          <p style={{ fontWeight: '600', fontFamily: this.fontR, color: fgc, lineHeight: this.state.language === 'eng' ? "100%" : "120%", fontSize: "12.0pt", padding: "5px", paddingTop: "3px", paddingBottom: '3px' }}>{txt}</p>
         </div>
       </div>
     )
@@ -606,12 +650,12 @@ class App extends Component {
                   <text style={{
                     color: "white", fontFamily: this.fontB, textAlign: "center", fontWeight: '700',
                     fontSize: 'x-large', marginTop: '15px', marginBottom: "25px", paddingLeft: "8%",
-                    lineHeight: this.fontB==='Kalpurush'?"110%": "110%", paddingRight: "8%"
+                    lineHeight: this.fontB === 'Kalpurush' ? "110%" : "110%", paddingRight: "8%"
                   }}>{prop.question}</text>
                   {this.ansBtn(prop.answers[0], "A")}{this.ansBtn(prop.answers[1], "B")}{this.ansBtn(prop.answers[2], "C")}{this.ansBtn(prop.answers[3], "D")}
                 </div>
                 {/* </div> */}
-                <text style={{color: 'white',position:"absolute",top:6,left:45}}>{this.state.timer}</text>
+                <text style={{ color: 'white', position: "absolute", top: 6, left: 45 }}>{this.state.timer}</text>
 
               </div>
               : this.languageScreen()}
