@@ -611,7 +611,7 @@ class App extends Component {
                   {this.ansBtn(prop.answers[0], "A")}{this.ansBtn(prop.answers[1], "B")}{this.ansBtn(prop.answers[2], "C")}{this.ansBtn(prop.answers[3], "D")}
                 </div>
                 {/* </div> */}
-                <text style={{color: 'white',position:"absolute",top:6,right:30}}>{this.state.timer}</text>
+                <text style={{color: 'white',position:"absolute",top:6,left:45}}>{this.state.timer}</text>
 
               </div>
               : this.languageScreen()}
