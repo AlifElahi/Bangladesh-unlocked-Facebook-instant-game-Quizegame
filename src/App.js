@@ -31,7 +31,7 @@ class App extends Component {
       timer: 15,
       showAdds: false,
       lvl5Modal: false,
-      tryAgain: true,
+      tryAgain: false,
       conditionPage: false
     };
     this.img = image.backImages
@@ -354,7 +354,7 @@ class App extends Component {
           marginTop: '20px',
           height: '40px',
           position: "absolute",
-          bottom: '33vh'
+          bottom: '32vh'
         }}>
           <div onClick={() => window.FBInstant.quit()} style={{
             display: "flex", minHeight: "40px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
@@ -384,7 +384,7 @@ class App extends Component {
           marginTop: '20px',
           height: '40px',
           position: "absolute",
-          bottom: '25vh'
+          bottom: '22vh'
         }}>
           <div onClick={() => this.shareOnFb()} style={{
             display: "flex", minHeight: "40px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
