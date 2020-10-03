@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import m5 from "../src/img/m5.svg";
+import Loader from 'react-loader-spinner'
 import win from "../src/img/win.png";
-import fb from "../src/img/facebook1.svg";
+import playengC from "../src/img/playengC.png";
+import playengNC from "../src/img/playengNC.png";
+import playBanC from "../src/img/playBanC.png";
+import playBanNC from "../src/img/playBanNC.png";
+import skipadd from "../src/img/skipadd.svg";
+import share from "../src/img/Share.svg";
 import acceptEng from "../src/img/acceptEng.png";
 import acceptBan from "../src/img/acceptBan.png";
 import play from "../src/img/playAgain.svg";
-import playeng from "../src/img/winplayeng.svg";
-import playban from "../src/img/winplayban.svg";
 import logo from "../src/img/logo1.png";
 import banglaQ from "../src/banglaqns";
 import englishQ from "../src/englishqns";
@@ -16,14 +19,19 @@ import terms from "./tremand condition.js"
 import trm from "./img/trm.svg"
 import trmL from "./img/trmL.png"
 import './App.css';
-import { greenColor, broderR, redColor, addPoition, addduration, lvl5duretion, answerColorDuration, imageBackgroundColor, ansOptionColor, scriptUrl, fontER, fontBR, fontEB, fontBB } from "./control.js";
+import { greenColor, broderR, redColor, addPoition, addduration, fontBS, answerColorDuration, imageBackgroundColor, ansOptionColor, scriptUrl, fontER, fontBR, fontEB, fontBB } from "./control.js";
+import engToban from './engtoban';
+import UIfx from 'uifx';
+import right from './mp3/right.mp3';
+import wrong from './mp3/wrong.mp3';
+
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0,
+      score: 0,
       colorChange: false,
       questions: [],
       language: '',
@@ -32,32 +40,37 @@ class App extends Component {
       showAdds: false,
       lvl5Modal: false,
       tryAgain: false,
-      conditionPage: false
+      conditionPage: false,
+      isSkip: true,
+      isLoading: false
     };
+    this.nextQuestions = []
+    this.addTimer = {}
     this.img = image.backImages
     this.adds = []
-    this.m5 = new Image().src = m5;
     this.win = new Image().src = win;
+    this.skipImg = new Image().src = skipadd;
     this.logo = new Image().src = logo;
     this.trm = new Image().src = trm;
-    this.fb = new Image().src = fb;
+    this.fb = new Image().src = share;
     this.trmL = new Image().src = trmL;
     this.languageImg = new Image().src = language;
     this.bquestions = []
     this.banglaQ = banglaQ
     this.englishQ = englishQ
+    this.right = null
+    this.wrong = null
     this.equestions = []
     this.contextId = null
     this.contextType = null
     this.answerGiven = null
     this.playerName = null
-    this.score=0;
     this.playerPic = null
     this.playerId = null
     this.fontB = fontEB
     this.fontR = fontER
     this.marginvh = 0
-    this.intervalId = {}
+    this.intervalId = "jj"
     this.terms = terms.termE
     this.broderR = broderR
     this.acceptBtn = new Image().src = acceptEng
@@ -69,6 +82,8 @@ class App extends Component {
       new Image().src = image;
     });
 
+    this.right = await new UIfx(right);
+    this.wrong = await new UIfx(wrong);
     // this.adds = await this.shuffleArray(this.adds);
     this.win = new Image().src = win;
     this.logo = new Image().src = logo;
@@ -76,8 +91,10 @@ class App extends Component {
     this.trm = new Image().src = trm;
     this.trmL = new Image().src = trmL;
     this.play = new Image().src = play
-    this.playeng = new Image().src = playeng
-    this.playban = new Image().src = playban
+    this.playengC = new Image().src = playengC
+    this.playengNC = new Image().src = playengNC
+    this.playbanNC = new Image().src = playBanNC
+    this.playbanC = new Image().src = playBanC
     this.languageImg = new Image().src = language;
     // this.adds.forEach((image) => {
     //   new Image().src = image
@@ -87,35 +104,37 @@ class App extends Component {
     script.src = "https://connect.facebook.net/en_US/fbinstant.6.3.js"
     script.id = "fbinstant"
     document.body.appendChild(script);
-    this.marginvh = window.innerWidth / window.innerHeight < .5 ? "21vh" : "18vh"
+    this.marginvh = window.innerWidth / window.innerHeight < .5 ? "22vh" : "18vh"
 
     let bquestion = []
     let equestion = []
     let add = []
     let rand = []
-    for (let x = 0; x < 10; x++) {
-      this.banglaQ[x] = await this.shuffleArray(this.banglaQ[x])
-      this.englishQ[x] = await this.shuffleArray(this.englishQ[x])
 
-    }
+    this.banglaQ = await this.shuffleArray(this.banglaQ)
+    this.englishQ = await this.shuffleArray(this.englishQ)
+
     for (let i = 0; rand.length < addPoition.length; i++) {
       let w = Math.floor((Math.random() * 11) + 0)
       if (!rand.includes(w)) {
         rand.push(w)
         let p = image.adds[w]
-        console.log("add", w);
         let r = new Image().src = p;
         add.push(r)
       }
     }
-    for (let i = 0; i < 10; i++) {
-      let q = this.banglaQ[i][Math.floor((Math.random() * banglaQ[i].length) + 0)]
-      let eq = this.englishQ[i][Math.floor((Math.random() * englishQ[i].length) + 0)]
-      q.answers = await this.shuffleArray(q.answers);
-      eq.answers = await this.shuffleArray(eq.answers);
-      bquestion.push(q);
-      equestion.push(eq);
-
+    rand = []
+    for (let i = 0; rand.length < 15; i++) {
+      let w = Math.floor((Math.random() * 15) + 0)
+      if (!rand.includes(w)) {
+        rand.push(w)
+        let q = this.banglaQ[w]
+        let eq = this.englishQ[w]
+        q.answers = await this.shuffleArray(q.answers);
+        eq.answers = await this.shuffleArray(eq.answers);
+        bquestion.push(q);
+        equestion.push(eq);
+      }
     }
     this.adds = add
     this.setState({ questions: bquestion })
@@ -133,18 +152,11 @@ class App extends Component {
 
           window.FBInstant.startGameAsync()
             .then(function () {
-
-              // Retrieving context and player information can only be done
-              // once startGameAsync() resolves
               this.contextId = window.FBInstant.context.getID();
               this.contextType = window.FBInstant.context.getType();
               this.playerName = window.FBInstant.player.getName();
               this.playerPic = window.FBInstant.player.getPhoto();
               this.playerId = window.FBInstant.player.getID();
-              // console.log("hdd", this.playerName );
-
-              // Once startGameAsync() resolves it also means the loading view has 
-              // been removed and the user can see the game viewport
             });
         }
           // Start loading game assets here
@@ -158,31 +170,19 @@ class App extends Component {
     // for (let k = 0; k < 15 && this.state.showTimer; k++) {
     this.setState({ timer: 15 })
     this.intervalId = setInterval(() => {
-      const o = this.state.timer - 1
-      console.log(o);
+      let o = this.state.timer - 1
       if (o <= 0) {
-        this.funLvl(false)
+        // this.setState({ timer:150 });
         clearInterval(this.intervalId)
-
+        if (!this.state.tryAgain) {
+          this.wrong.play(1.0)
+          this.funLvl(false)
+        }
+        return
       }
       this.setState({ timer: o });
     }, 1000);
-    // (
-    //   () => {
-    //     if (this.state.showTimer) {
-    //       console.log("lllaa1");
-    //       if(this.state.timer>1){
-    //       console.log("lllaa");
-    //       const o=this.state.timer - 1
-    //       this.setState({ timer: o });}
-    //       else{
-    //         this.funLvl(false)
-    //       }
-    //     }
-    //   },
-    //   1000);
 
-    // }
   }
 
   async common() {
@@ -196,32 +196,32 @@ class App extends Component {
       qu = banglaQ
 
     }
-    // for (let x = 0; x < 10; x++) {
-    //   qu[x]=await this.shuffleArray(this.qu[x])      
-    // }
+    qu = await this.shuffleArray(qu)
     let rand = []
     for (let i = 0; rand.length < addPoition.length; i++) {
       let w = Math.floor((Math.random() * 11) + 0)
       if (!rand.includes(w)) {
         rand.push(w)
         let p = image.adds[w]
-        console.log("add", w);
         let r = new Image().src = p;
         add.push(r)
       }
     }
-    for (let i = 0; i < 10; i++) {
 
-      let q = qu[i][Math.floor((Math.random() * banglaQ[i].length) + 0)]
-
-      q.answers = await this.shuffleArray(q.answers);
-      question.push(q);
-      this.adds = add
-
+    rand = []
+    for (let i = 0; rand.length < 15; i++) {
+      let w = Math.floor((Math.random() * 15) + 0)
+      if (!rand.includes(w)) {
+        rand.push(w)
+        let q = qu[w]
+        q.answers = await this.shuffleArray(q.answers);
+        question.push(q);
+      }
     }
     this.adds = add
+    this.nextQuestions = question
 
-    this.setState({ questions: question })
+    // this.setState({ questions: question })
   }
 
   selectLanguage(str) {
@@ -243,13 +243,11 @@ class App extends Component {
 
   async postname(lvl) {
 
-    // console.log(window.FBInstant.player.getName(),this.playerId,this.playerName);
     let frombody = new FormData()
     frombody.append('userId', window.FBInstant.player.getID())
     frombody.append('userName', window.FBInstant.player.getName())
     frombody.append('time', Date.now())
-    frombody.append('level', lvl)
-    // console.log("ff",frombody);
+    frombody.append('level', this.state.score)
     fetch(scriptUrl, { method: 'POST', body: frombody })
       .then()
       .catch(error => console.log('Error!', error.message))
@@ -320,31 +318,35 @@ class App extends Component {
   }
 
 
-  palyAgain() {
-    this.setState({ level: 0, showAdds: false, lvl5Modal: false, tryAgain: false })
-    this.timerFunction()
+  async palyAgain() {
+    this.isSkip = true
+    this.setState({ isLoading: true })
+    await this.common()
+    this.setState({ isLoading: false })
+    setTimeout(
+      () => {
+        this.setState({ level: 0, score: 0, showAdds: false, isLoading: false, colorChange: false, tryAgain: false, isSkip: true, questions: this.nextQuestions })
+        this.timerFunction()
+      }, 1000
+    )
+
   }
 
-  tryScreen( x) {
-    const playy = this.state.level >= this.state.questions.length ? this.state.language === "eng" ? this.playeng : this.playban : this.play
+  tryScreen() {
+    const playy = this.state.score >= 15 ? this.state.language === "eng" ? this.playengC : this.playbanC : this.state.language === "eng" ? this.playengNC : this.playbanNC
+    let scoreStr = this.state.language === 'ban' ? `${engToban(this.state.score)}/` : `${this.state.score}/`
+    scoreStr = this.state.language === 'ban' ? scoreStr.padStart(3, "০") : scoreStr.padStart(3, "0")
+    const markStr = this.state.language === 'ban' ? '১৫' : '15'
     return (
 
       <div style={{
         display: "flex", minHeight: "100vh", flexDirection: 'column', backgroundImage: `url(${playy})`,
         backgroundPosition: 'center',
-        backgroundSize: '100% 100%',
+        backgroundSize: '100%',
         backgroundColor: imageBackgroundColor,
         backgroundRepeat: 'no-repeat', alignItems: 'center'
       }}>
 
-        <div style={{
-          display: "flex", minHeight: "100vh"
-          , minWidth: "100%",
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-
-        </div>
 
         <div style={{
           display: "flex",
@@ -354,25 +356,25 @@ class App extends Component {
           marginTop: '20px',
           height: '40px',
           position: "absolute",
-          bottom: '32vh'
+          bottom:this.state.score<15? window.innerWidth / window.innerHeight < .5 ? "20vh" : "15vh":window.innerWidth / window.innerHeight < .5 ? "19vh" : "12vh"
         }}>
           <div onClick={() => window.FBInstant.quit()} style={{
-            display: "flex", minHeight: "40px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
+            display: "flex", minHeight: "35px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
             justifyContent: 'center',
             minWidth: "30%",
             backgroundColor: 'white',
             alignItems: "center", cursor: "pointer"
           }}>
-            <text style={{ fontFamily: this.fontR, color: 'black', fontWeight: '700', fontSize: '22px' }}>{this.terms.quit}</text>
+            <text style={{ fontFamily: this.fontB, color: 'black', fontWeight: '300', fontSize: '18px' }}>{this.terms.quit}</text>
           </div>
           <div onClick={() => this.palyAgain()} style={{
-            display: "flex", minHeight: "40px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
+            display: "flex", minHeight: "35px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
             minWidth: "30%",
             justifyContent: 'center',
             backgroundColor: '#FCB314',
             alignItems: "center", cursor: "pointer"
           }}>
-            <text style={{ fontFamily: this.fontR, color: 'black', fontWeight: '700', fontSize: '22px', padding: '3px' }}>{this.terms.playAgain}</text>
+            <text style={{ fontFamily: this.fontB, color: 'black', fontWeight: '300', fontSize: '18px', padding: '3px' }}>{this.terms.playAgain}</text>
           </div>
         </div>
 
@@ -383,22 +385,31 @@ class App extends Component {
           justifyContent: 'center',
           marginTop: '20px',
           height: '40px',
+          flexDirection: 'column',
           position: "absolute",
-          bottom: '22vh'
+          bottom:this.state.score<15? window.innerWidth / window.innerHeight < .5 ? "29vh" : "25vh":window.innerWidth / window.innerHeight < .5 ? "26vh" : "22vh"
         }}>
-          <div onClick={() => this.shareOnFb()} style={{
-            display: "flex", minHeight: "40px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
-            minWidth: "30%",
-            justifyContent:"center",
-            backgroundColor: '#FCB314',
-            // paddingLeft:"10px",
-            alignItems: "center", cursor: "pointer"
-          }}>
-            <img src={fb} alt="Logo" style={{
-          width: '20%',height:'20%',color:'white'
-        }} />
-            <text style={{ fontFamily: this.fontR, color: 'black', fontWeight: '700', fontSize: '22px', padding: '3px' }}>{this.terms.share}</text>
-          </div>
+
+          <img onClick={() => this.shareOnthis()} src={this.fb} alt="" style={{ height: "45px", marginBottom: "7px" }} />
+          <text onClick={() => this.shareOnthis()} style={{ fontFamily: this.fontR, color: 'white', fontWeight: '300', fontSize: '18px' }}>{this.terms.share}</text>
+
+        </div>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          width: "100vw",
+          justifyContent: 'center',
+          marginTop: '20px',
+          height: '40px',
+          flexDirection: 'row',
+          position: "absolute",
+          bottom: this.state.score<15?window.innerWidth / window.innerHeight < .5 ? "54vh" : "55vh":window.innerWidth / window.innerHeight < .5 ? "67vh" : "71vh"
+        }}>
+
+          {/* <img onClick={()=>this.shareOnthis()} src={this.fb} alt="" style={{height:"45px", marginBottom:"7px"}}/> */}
+          <text style={{ fontFamily: this.state.language === 'ban' ? fontBS : this.fontB, color: 'white', fontWeight: '600', fontSize: '44px' }}>{scoreStr}</text>
+          <text style={{ fontFamily: this.state.language === 'ban' ? fontBS : this.fontB, color: this.state.score === 15 ? '#FCB314' : 'white', fontWeight: '600', fontSize: '44px' }}>{markStr}</text>
+
         </div>
       </div>
 
@@ -408,18 +419,18 @@ class App extends Component {
 
   }
 
-   shareOnFb(){
-     window.FBInstant.shareAsync({
+  shareOnthis() {
+    window.this.Instant.shareAsync({
       intent: 'REQUEST',
       image: image.shareImage,
-      text: `I just have scored ${this.score}/10, you should also try . 
+      text: `I just have scored ${this.state.score}/10, you should also try . 
       know yourself, know your country`,
       data: { myReplayData: '...' },
-    }).then(function() {
+    }).then(function () {
       // continue with the game.
     });
   }
-  
+
 
   termsScreen() {
     let heightinvh = window.innerWidth / window.innerHeight < .5 ? "56vh" : "66vh"
@@ -479,8 +490,6 @@ class App extends Component {
       // this.postname("won")
     } else {
       img = this.adds[0];
-
-
     }
     return (
       <div style={{
@@ -488,13 +497,23 @@ class App extends Component {
         backgroundPosition: 'center',
         backgroundSize: "100%",
         backgroundColor: imageBackgroundColor,
-        backgroundRepeat: 'no-repeat', justifyContent: "center", alignItems: 'center'
+        backgroundRepeat: 'no-repeat'
       }}>
+        {this.state.isSkip ?
+          <div style={{ minHeigth: "100vh", minWidth: "100vw", borderRadius: 3, justifyContent: "flex-end", alignItems: "right", display: "flex" }}>
+            <img onClick={() => this.skipAdd()} src={this.skipImg} alt=""
+              style={{ marginTop: window.innerWidth / window.innerHeight < .5 ? "10vh" : "7vh", marginRight: '1.5vw', height: "25px", width: "80px", justifyContent: 'center', display: "flex", textAlign: "center", alignItems: 'center' }} />
+          </div> : <div></div>}
       </div>
     )
   }
 
-
+  skipAdd() {
+    clearInterval(this.addTimer)
+    this.setState({ level: this.state.level + 1, showAdds: false, isSkip: false });
+    this.timerFunction()
+    this.adds.shift();
+  }
 
   showImg(img) {
     if (img) {
@@ -525,14 +544,19 @@ class App extends Component {
     clearInterval(this.intervalId)
     this.answerGiven = str;
     this.setState({ colorChange: true })
+    if (str === this.state.questions[this.state.level].answer) {
+      this.setState({score: this.state.score + 1 })
+      this.right.play(1.0)
+    } else {
+      this.wrong.play(1.0)
+      // this.postname(this.state.level);
+
+    }
     setTimeout(
       () => {
         if (str === this.state.questions[this.state.level].answer) {
           this.funLvl(true);
         } else {
-          const ll = this.state.level
-          this.postname(ll)
-          this.score=this.state.level+1
           this.funLvl(false);
           // this.postname(this.state.level);
 
@@ -547,54 +571,44 @@ class App extends Component {
 
 
   funLvl = (boo) => {
-    // console.log(this.state.level);
-    if (boo) {
-      if (this.state.level === this.state.questions.length - 1) {
-          this.score=10
-          this.postname("won")
-        this.common()
-        setTimeout(
-          () => {
-            this.setState({ tryAgain: true });
-          },
-          6000);
-      }
-      if (addPoition.includes(this.state.level)) {
-        this.setState({ showAdds: true, colorChange: false })
-        setTimeout(
-          () => {
-            this.setState({ level: this.state.level + 1, showAdds: false });
-            this.timerFunction()
-            this.adds.shift();
-          },
-          addduration
-        );
-      }
-      else if (this.state.level === 40) {
-        this.setState({ lvl5Modal: true, colorChange: false })
-        setTimeout(
-          () => {
-            this.setState({ level: this.state.level + 1, lvl5Modal: false });
-          },
-          lvl5duretion
-        );
-      }
-      else {
-        this.setState({ level: this.state.level + 1, colorChange: false })
-        this.timerFunction()
-        // console.log(this.state.level, "kk");
-      }
-
-    } else {
-      this.setState({ showAdds: true, colorChange: false })
-      this.common()
-      setTimeout(
+    if (addPoition.includes(this.state.level)) {
+      this.setState({ showAdds: true, colorChange: false, isSkip: true })
+      this.addTimer = setInterval(
         () => {
-          this.setState({ showAdds: false, tryAgain: true });
+          this.skipAdd();
         },
         addduration
       );
+      return
+    }
+    if (boo) {
+      if (this.state.level === this.state.questions.length - 1) {
+        // this.setState({isSkip:false})
+        this.postname("won")
+        // this.common()
+        this.setState({ tryAgain: true });
+        console.log("score ", this.state.score);
+      }
+      else {
+        this.setState({ level: this.state.level + 1, colorChange: false})
+        this.timerFunction()
 
+      }
+
+    } else {
+      if (this.state.level === this.state.questions.length - 1) {
+        // this.setState({isSkip:false})
+        this.postname("won")
+        // this.common()
+        this.setState({ tryAgain: true });
+        console.log("score ", this.state.score);
+
+
+      } else {
+        // clearInterval(this.intervalId)
+        this.setState({ level: this.state.level + 1, colorChange: false })
+      }
+      this.timerFunction()
     }
   }
 
@@ -620,6 +634,29 @@ class App extends Component {
       </div>
     )
   }
+
+  load() {
+    return (<div style={{
+      // backgroundImage: `url(${backd})`,
+      // backgroundPosition: 'center',
+      // backgroundSize: '100%',
+      // backgroundRepeat: 'no-repeat',
+      backgroundColor: imageBackgroundColor,
+      alignItems: 'center',
+      display: "flex", minHeight: "100vh", flexDirection: 'column', justifyContent: 'center',
+    }}>
+      <Loader
+        type="Rings"
+        color="yellow"
+        height={100}
+        width={100}
+        timeout={0} //3 secs
+
+      />
+    </div>
+    )
+  }
+
   render() {
     let prop = this.state.questions[this.state.level <= 0 ? 0 : this.state.level]
     let backd = this.img[this.state.level]
@@ -634,7 +671,7 @@ class App extends Component {
       <div style={{
         display: "flex", minHeight: "100vh", flexDirection: 'column', justifyContent: 'center'
       }}>
-        {this.state.conditionPage ? this.termsScreen() : this.state.tryAgain ? this.tryScreen() : this.state.showAdds ? this.modal() :
+        {this.state.isLoading ? this.load() : this.state.conditionPage ? this.termsScreen() : this.state.tryAgain ? this.tryScreen() : this.state.showAdds ? this.modal() :
           this.state.level >= this.state.questions.length ? this.modal() :
             this.state.language && this.state.level >= 0 ?
               <div style={{
@@ -656,8 +693,15 @@ class App extends Component {
                   {this.ansBtn(prop.answers[0], "A")}{this.ansBtn(prop.answers[1], "B")}{this.ansBtn(prop.answers[2], "C")}{this.ansBtn(prop.answers[3], "D")}
                 </div>
                 {/* </div> */}
-                <text style={{ color: 'white', position: "absolute", top: 6, left: 45 }}>{this.state.timer}</text>
+                <div style={{ minHeigth: "30px", minWidth: "100vw", borderRadius: 3, justifyContent: "center", alignItems: "center", display: "flex", position: "absolute", top: window.innerWidth / window.innerHeight < .5 ? "3vh" : "0vh" }}>
+                  <div style={{ minHeight: "30px", minWidth: "30px", borderRadius: 3, backgroundColor: '#FCB314', justifyContent: "center", alignItems: "center", display: "flex" }}>
+                    <div style={{ minHeight: "26px", minWidth: "26px", borderRadius: 3, backgroundColor: 'black', justifyContent: "center", alignItems: "center", display: "flex" }}>
 
+                      <text style={{ color: 'black', backgroundColor: '#FCB314', borderRadius: 3, height: "20px", width: "20px", fontFamily: fontEB, fontSize: "large", justifyContent: 'center', display: "flex", textAlign: "center", alignItems: 'center' }}>{this.state.timer}</text>
+
+                    </div>
+                  </div>
+                </div>
               </div>
               : this.languageScreen()}
       </div>

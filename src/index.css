@@ -8,6 +8,20 @@
 }
 
 @font-face {
+  font-family: 'Shorif Bongobondhu ANSI V1';
+  src: url(./font/ShorifBongobondhuANSIV1.eot);
+  src: local('Shorif Bongobondhu ANSI V1'), local('ShorifBongobondhuANSIV1'),
+      url(./font/ShorifBongobondhuANSIV1.eot?#iefix) format('embedded-opentype'),
+      url(./font/ShorifBongobondhuANSIV1.woff2) format('woff2'),
+      url(./font/ShorifBongobondhuANSIV1.woff) format('woff'),
+      url(./font/ShorifBongobondhuANSIV1.svg#ShorifBongobondhuANSIV1) format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
   font-family: 'Kalpurush';
   src: url(./font/kalpurush.eot);
   src: url(./font/kalpurush.eot?#iefix) format('embedded-opentype'),
@@ -47,7 +61,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Kalpurush', 'Segoe UI', 'Roboto', 'Oxygen','Bangla',
-    'Ubuntu', 'Cantarell','SutonnyMJ Regular', 'Fira Sans', 'univers-condensed-medium', 'univers-condensed-bold','Helvetica Neue','Roboto Condensed','SutonnyMJ Bold'
+    'Ubuntu', 'Cantarell','Shorif Bongobondhu ANSI V1', 'Fira Sans', 'univers-condensed-medium', 'univers-condensed-bold','Helvetica Neue','Roboto Condensed','SutonnyMJ Bold'
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

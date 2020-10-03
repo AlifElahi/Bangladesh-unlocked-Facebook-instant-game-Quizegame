@@ -9,7 +9,12 @@ import l6 from "./l6.svg";
 import l7 from "./l7.svg";
 import l8 from "./l8.svg";
 import l9 from "./l9.svg";
-import l10 from "./l10.svg"
+import l10 from "./l10.svg";
+import l11 from "./l11.svg";
+import l12 from "./l12.svg";
+import l13 from "./l13.svg";
+import l14 from "./l14.svg";
+import l15 from "./l15.svg";
 // import add from "./add.svg";
 import add1 from "./add1.svg";
 import add2 from "./add2.svg";
@@ -26,7 +31,7 @@ import add11 from "./add11.svg";
 
 
 const image={backImages : [
-    l1, l2, l3, l4, l5, l6, l7, l8, l9, l10
+    l1, l2, l3, l4, l5, l6, l7, l8, l9, l10,l11,l12,l13,l14,l15
 ]
 
 , adds : [
