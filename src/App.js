@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import Loader from 'react-loader-spinner'
+import htmlToImage from 'html-to-image';
+import ReactDOM from 'react-dom';
+import { css } from "@emotion/core";
+import MoonLoader from "react-spinners/MoonLoader";
 import win from "../src/img/win.png";
 import playengC from "../src/img/playengC.png";
 import playengNC from "../src/img/playengNC.png";
@@ -18,6 +21,7 @@ import image from "./img/image.js";
 import terms from "./tremand condition.js"
 import trm from "./img/trm.svg"
 import trmL from "./img/trmL.png"
+import ss from "./img/shareback.jpg";
 import './App.css';
 import { greenColor, broderR, redColor, addPoition, addduration, fontBS, answerColorDuration, imageBackgroundColor, ansOptionColor, scriptUrl, fontER, fontBR, fontEB, fontBB } from "./control.js";
 import engToban from './engtoban';
@@ -25,7 +29,11 @@ import UIfx from 'uifx';
 import right from './mp3/right.mp3';
 import wrong from './mp3/wrong.mp3';
 
-
+const override = css`
+  display: block;
+  margin: 2 auto;
+  border-color: #FCB314;
+`;
 
 class App extends Component {
   constructor(props) {
@@ -36,12 +44,15 @@ class App extends Component {
       questions: [],
       language: '',
       level: 0,
+      shareOn: true,
       timer: 15,
       showAdds: false,
       lvl5Modal: false,
       tryAgain: false,
       conditionPage: false,
       isSkip: true,
+      shareon1: false,
+      propic: null,
       isLoading: false
     };
     this.nextQuestions = []
@@ -49,6 +60,7 @@ class App extends Component {
     this.img = image.backImages
     this.adds = []
     this.win = new Image().src = win;
+    this.ss = new Image().src = ss;
     this.skipImg = new Image().src = skipadd;
     this.logo = new Image().src = logo;
     this.trm = new Image().src = trm;
@@ -63,6 +75,7 @@ class App extends Component {
     this.equestions = []
     this.contextId = null
     this.contextType = null
+    this.shareRef = React.createRef();
     this.answerGiven = null
     this.playerName = null
     this.playerPic = null
@@ -84,7 +97,6 @@ class App extends Component {
 
     this.right = await new UIfx(right);
     this.wrong = await new UIfx(wrong);
-    // this.adds = await this.shuffleArray(this.adds);
     this.win = new Image().src = win;
     this.logo = new Image().src = logo;
     this.acceptBtn = new Image().src = acceptEng
@@ -96,15 +108,13 @@ class App extends Component {
     this.playbanNC = new Image().src = playBanNC
     this.playbanC = new Image().src = playBanC
     this.languageImg = new Image().src = language;
-    // this.adds.forEach((image) => {
-    //   new Image().src = image
-    // });
+
 
     const script = document.createElement('script');
     script.src = "https://connect.facebook.net/en_US/fbinstant.6.3.js"
     script.id = "fbinstant"
     document.body.appendChild(script);
-    this.marginvh = window.innerWidth / window.innerHeight < .5 ? "22vh" : "18vh"
+    this.marginvh = window.innerWidth / window.innerHeight < .5 ? "21vh" : "17.5vh"
 
     let bquestion = []
     let equestion = []
@@ -159,7 +169,6 @@ class App extends Component {
               this.playerId = window.FBInstant.player.getID();
             });
         }
-          // Start loading game assets here
         );
 
     }
@@ -167,12 +176,10 @@ class App extends Component {
   }
 
   timerFunction() {
-    // for (let k = 0; k < 15 && this.state.showTimer; k++) {
     this.setState({ timer: 15 })
     this.intervalId = setInterval(() => {
       let o = this.state.timer - 1
       if (o <= 0) {
-        // this.setState({ timer:150 });
         clearInterval(this.intervalId)
         if (!this.state.tryAgain) {
           this.wrong.play(1.0)
@@ -319,13 +326,15 @@ class App extends Component {
 
 
   async palyAgain() {
+    if (this.state.isLoading) return
+    clearInterval(this.intervalId)
     this.isSkip = true
     this.setState({ isLoading: true })
     await this.common()
-    this.setState({ isLoading: false })
+    // this.setState({ isLoading: false })
     setTimeout(
       () => {
-        this.setState({ level: 0, score: 0, showAdds: false, isLoading: false, colorChange: false, tryAgain: false, isSkip: true, questions: this.nextQuestions })
+        this.setState({ level: 0, score: 0, isLoading: false, showAdds: false, isLoading: false, colorChange: false, tryAgain: false, isSkip: true, questions: this.nextQuestions })
         this.timerFunction()
       }, 1000
     )
@@ -337,18 +346,29 @@ class App extends Component {
     let scoreStr = this.state.language === 'ban' ? `${engToban(this.state.score)}/` : `${this.state.score}/`
     scoreStr = this.state.language === 'ban' ? scoreStr.padStart(3, "০") : scoreStr.padStart(3, "0")
     const markStr = this.state.language === 'ban' ? '১৫' : '15'
+    let tt = `${this.state.score}/15`
+    tt = tt.padStart(5, "0")
     return (
 
-      <div style={{
+
+      <div ref={this.shareRef} style={{
         display: "flex", minHeight: "100vh", flexDirection: 'column', backgroundImage: `url(${playy})`,
         backgroundPosition: 'center',
         backgroundSize: '100%',
         backgroundColor: imageBackgroundColor,
+        justifyContent: "center",
         backgroundRepeat: 'no-repeat', alignItems: 'center'
       }}>
 
+        <MoonLoader
+          css={override}
+          size={100}
+          color={"#FCB314"}
+          loading={this.state.isLoading}
+        />
 
-        <div style={{
+
+        { this.state.shareOn ? <div style={{
           display: "flex",
           flexDirection: "row",
           width: "100vw",
@@ -356,9 +376,12 @@ class App extends Component {
           marginTop: '20px',
           height: '40px',
           position: "absolute",
-          bottom:this.state.score<15? window.innerWidth / window.innerHeight < .5 ? "20vh" : "15vh":window.innerWidth / window.innerHeight < .5 ? "19vh" : "12vh"
+          bottom: this.state.score < 15 ? window.innerWidth / window.innerHeight < .5 ? "19vh" : "12vh" : window.innerWidth / window.innerHeight < .5 ? "18vh" : "12vh"
         }}>
-          <div onClick={() => window.FBInstant.quit()} style={{
+          <div onClick={() => {
+            if (this.state.isLoading) return
+            window.FBInstant.quit()
+          }} style={{
             display: "flex", minHeight: "35px", border: 'solid', borderRadius: this.broderR, borderWidth: 1,
             justifyContent: 'center',
             minWidth: "30%",
@@ -376,9 +399,9 @@ class App extends Component {
           }}>
             <text style={{ fontFamily: this.fontB, color: 'black', fontWeight: '300', fontSize: '18px', padding: '3px' }}>{this.terms.playAgain}</text>
           </div>
-        </div>
+        </div> : null}
 
-        <div style={{
+        { this.state.shareOn ? <div style={{
           display: "flex",
           alignItems: "center",
           width: "100vw",
@@ -387,11 +410,30 @@ class App extends Component {
           height: '40px',
           flexDirection: 'column',
           position: "absolute",
-          bottom:this.state.score<15? window.innerWidth / window.innerHeight < .5 ? "29vh" : "25vh":window.innerWidth / window.innerHeight < .5 ? "26vh" : "22vh"
+          bottom: this.state.score < 15 ? window.innerWidth / window.innerHeight < .5 ? "23vh" : "18vh" : window.innerWidth / window.innerHeight < .5 ? "23vh" : "18vh"
         }}>
 
           <img onClick={() => this.shareOnthis()} src={this.fb} alt="" style={{ height: "45px", marginBottom: "7px" }} />
           <text onClick={() => this.shareOnthis()} style={{ fontFamily: this.fontR, color: 'white', fontWeight: '300', fontSize: '18px' }}>{this.terms.share}</text>
+
+        </div> : null}
+
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          width: "70vw",
+          justifyContent: 'center',
+          marginTop: '20px',
+          height: '40px',
+          flexDirection: 'row',
+          position: "absolute",
+          bottom: this.state.score < 15 ? window.innerWidth / window.innerHeight < .5 ? "63vh" : "66vh" : window.innerWidth / window.innerHeight < .5 ? "62vh" : "66vh"
+        }}>
+          {/* <img src={this.trmL} alt="" style={{ border: "solid", borderRadius: 25, marginRight: "20px", borderWidth: 1, borderColor: 'white', hight: "50px", width: "50px" }} /> */}
+          <img src={this.state.propic} alt="" style={{ border: "solid", borderRadius: 25, marginRight: "20px", borderWidth: 1, borderColor: 'white', hight: "50px", width: "50px" }} />
+
+          {/* <text style={{ fontFamily: fontEB, color: 'white', fontWeight: '300', fontSize: "xx-large" }}>ALI</text> */}
+          <text style={{ fontFamily: fontEB, color: 'white', fontWeight: '300', fontSize: "xx-large" }}>{window.FBInstant.player.getName()}</text>
 
         </div>
         <div style={{
@@ -403,7 +445,7 @@ class App extends Component {
           height: '40px',
           flexDirection: 'row',
           position: "absolute",
-          bottom: this.state.score<15?window.innerWidth / window.innerHeight < .5 ? "54vh" : "55vh":window.innerWidth / window.innerHeight < .5 ? "67vh" : "71vh"
+          bottom: this.state.score < 15 ? window.innerWidth / window.innerHeight < .5 ? "53vh" : "55vh" : window.innerWidth / window.innerHeight < .5 ? "53vh" : "55vh"
         }}>
 
           {/* <img onClick={()=>this.shareOnthis()} src={this.fb} alt="" style={{height:"45px", marginBottom:"7px"}}/> */}
@@ -419,16 +461,35 @@ class App extends Component {
 
   }
 
-  shareOnthis() {
-    window.this.Instant.shareAsync({
-      intent: 'REQUEST',
-      image: image.shareImage,
-      text: `I just have scored ${this.state.score}/10, you should also try . 
-      know yourself, know your country`,
-      data: { myReplayData: '...' },
-    }).then(function () {
-      // continue with the game.
-    });
+  async shareOnthis() {
+    if (this.state.isLoading) return
+    this.setState({ shareOn: false })
+
+    setTimeout(
+      () => {
+        this.setState({ isLoading: true, shareOn: true })
+      },
+      500
+    );
+    let node = await ReactDOM.findDOMNode(this.shareRef.current)
+    try {
+      let dataurl = await htmlToImage.toPng(node)
+      this.setState({ isLoading: false })
+      window.FBInstant.shareAsync({
+        intent: 'REQUEST',
+        image: dataurl,
+        text: "",
+        data: { myReplayData: '...' },
+      }).then(function () {
+        // this.setState({shareOn:true})
+
+      });
+    } catch (error) {
+      this.setState({ isLoading: false })
+      console.log('oops, something went wrong!', error);
+    }
+
+
   }
 
 
@@ -545,7 +606,7 @@ class App extends Component {
     this.answerGiven = str;
     this.setState({ colorChange: true })
     if (str === this.state.questions[this.state.level].answer) {
-      this.setState({score: this.state.score + 1 })
+      this.setState({ score: this.state.score + 1 })
       this.right.play(1.0)
     } else {
       this.wrong.play(1.0)
@@ -583,29 +644,32 @@ class App extends Component {
     }
     if (boo) {
       if (this.state.level === this.state.questions.length - 1) {
-        // this.setState({isSkip:false})
+        if (!this.state.propic) {
+          let imagepp = new Image().src = window.FBInstant.player.getPhoto();
+          this.setState({ propic: imagepp })
+        }
         this.postname("won")
-        // this.common()
         this.setState({ tryAgain: true });
         console.log("score ", this.state.score);
       }
       else {
-        this.setState({ level: this.state.level + 1, colorChange: false})
+        this.setState({ level: this.state.level + 1, colorChange: false })
         this.timerFunction()
 
       }
 
     } else {
       if (this.state.level === this.state.questions.length - 1) {
-        // this.setState({isSkip:false})
         this.postname("won")
-        // this.common()
+        if (!this.state.propic) {
+          let imagepp = new Image().src = window.FBInstant.player.getPhoto();
+          this.setState({ propic: imagepp })
+        }
         this.setState({ tryAgain: true });
         console.log("score ", this.state.score);
 
 
       } else {
-        // clearInterval(this.intervalId)
         this.setState({ level: this.state.level + 1, colorChange: false })
       }
       this.timerFunction()
@@ -645,14 +709,13 @@ class App extends Component {
       alignItems: 'center',
       display: "flex", minHeight: "100vh", flexDirection: 'column', justifyContent: 'center',
     }}>
-      <Loader
+      {/* <Loader
         type="Rings"
         color="yellow"
         height={100}
         width={100}
         timeout={0} //3 secs
-
-      />
+      /> */}
     </div>
     )
   }
@@ -671,7 +734,7 @@ class App extends Component {
       <div style={{
         display: "flex", minHeight: "100vh", flexDirection: 'column', justifyContent: 'center'
       }}>
-        {this.state.isLoading ? this.load() : this.state.conditionPage ? this.termsScreen() : this.state.tryAgain ? this.tryScreen() : this.state.showAdds ? this.modal() :
+        { this.state.conditionPage ? this.termsScreen() : this.state.tryAgain ? this.tryScreen() : this.state.showAdds ? this.modal() :
           this.state.level >= this.state.questions.length ? this.modal() :
             this.state.language && this.state.level >= 0 ?
               <div style={{
@@ -682,17 +745,15 @@ class App extends Component {
                 backgroundRepeat: 'no-repeat',
                 display: "flex", minHeight: "100vh", flexDirection: 'column', justifyContent: 'flex-end',
               }}>
-                {/* <div style={{ height: "100%", width: "100%", position: 'absolute' }}> */}
                 <div style={grid}>
                   {this.showImg(prop.image ? prop.image : false)}
                   <text style={{
                     color: "white", fontFamily: this.fontB, textAlign: "center", fontWeight: '700',
-                    fontSize: 'x-large', marginTop: '15px', marginBottom: "25px", paddingLeft: "8%",
+                    fontSize: prop.image ?'large':'x-large', marginTop: '15px', marginBottom: "23px", paddingLeft: "8%",
                     lineHeight: this.fontB === 'Kalpurush' ? "110%" : "110%", paddingRight: "8%"
                   }}>{prop.question}</text>
                   {this.ansBtn(prop.answers[0], "A")}{this.ansBtn(prop.answers[1], "B")}{this.ansBtn(prop.answers[2], "C")}{this.ansBtn(prop.answers[3], "D")}
                 </div>
-                {/* </div> */}
                 <div style={{ minHeigth: "30px", minWidth: "100vw", borderRadius: 3, justifyContent: "center", alignItems: "center", display: "flex", position: "absolute", top: window.innerWidth / window.innerHeight < .5 ? "3vh" : "0vh" }}>
                   <div style={{ minHeight: "30px", minWidth: "30px", borderRadius: 3, backgroundColor: '#FCB314', justifyContent: "center", alignItems: "center", display: "flex" }}>
                     <div style={{ minHeight: "26px", minWidth: "26px", borderRadius: 3, backgroundColor: 'black', justifyContent: "center", alignItems: "center", display: "flex" }}>

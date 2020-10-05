@@ -1,7 +1,7 @@
 
 const greenColor='#69A12F';
 const redColor='#DC0613';
-const addPoition =[3,8,13];
+const addPoition =[4,9];
 const addduration=5000; 
 const lvl5duretion=4000; 
 const answerColorDuration=1000; 
