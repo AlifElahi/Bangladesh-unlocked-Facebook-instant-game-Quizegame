@@ -645,7 +645,9 @@ class App extends Component {
     if (boo) {
       if (this.state.level === this.state.questions.length - 1) {
         if (!this.state.propic) {
-          let imagepp = new Image().src = window.FBInstant.player.getPhoto();
+          let imagepp = new Image();
+          imagepp.crossOrigin = 'anonymous';
+          imagepp.src = window.FBInstant.player.getPhoto();
           this.setState({ propic: imagepp })
         }
         this.postname("won")
@@ -662,7 +664,9 @@ class App extends Component {
       if (this.state.level === this.state.questions.length - 1) {
         this.postname("won")
         if (!this.state.propic) {
-          let imagepp = new Image().src = window.FBInstant.player.getPhoto();
+          let imagepp = new Image();
+          imagepp.crossOrigin = 'anonymous';
+          imagepp.src = window.FBInstant.player.getPhoto();
           this.setState({ propic: imagepp })
         }
         this.setState({ tryAgain: true });
